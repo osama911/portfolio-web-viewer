@@ -1,0 +1,107 @@
+{
+  "name": "John Doe",
+  "title": "Full Stack Developer & Designer",
+  "bio": "Passionate about creating beautiful and functional digital experiences. I specialize in web and mobile development with a focus on user-centered design.",
+  "avatarUrl": "https://via.placeholder.com/300",
+  "headerBackgroundColor": "#6200ea",
+  "contactLinks": [
+    {
+      "label": "Email",
+      "url": "mailto:john@example.com",
+      "icon": "📧"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/johndoe",
+      "icon": "💻"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://linkedin.com/in/johndoe",
+      "icon": "💼"
+    },
+    {
+      "label": "Website",
+      "url": "https://johndoe.com",
+      "icon": "🌐"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Web Development",
+      "description": "Full-stack web applications and responsive websites",
+      "projects": [
+        {
+          "title": "E-Commerce Platform",
+          "description": "A modern online shopping platform with payment integration and inventory management.",
+          "mediaUrl": "https://via.placeholder.com/600x400",
+          "mediaType": "image",
+          "links": [
+            {
+              "label": "View Live",
+              "url": "https://example.com/project1"
+            },
+            {
+              "label": "GitHub",
+              "url": "https://github.com/johndoe/project1"
+            }
+          ]
+        },
+        {
+          "title": "Task Management App",
+          "description": "Collaborative task management tool with real-time updates.",
+          "mediaUrl": "https://via.placeholder.com/600x400",
+          "mediaType": "image",
+          "links": [
+            {
+              "label": "View Demo",
+              "url": "https://example.com/project2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mobile Apps",
+      "description": "Native and cross-platform mobile applications",
+      "projects": [
+        {
+          "title": "Fitness Tracker",
+          "description": "Track your workouts, nutrition, and progress with detailed analytics.",
+          "mediaUrl": "https://via.placeholder.com/600x400",
+          "mediaType": "image",
+          "links": [
+            {
+              "label": "App Store",
+              "url": "https://apps.apple.com/app/example"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "UI/UX Design",
+      "description": "User interface and experience design projects",
+      "projects": [
+        {
+          "title": "Banking App Redesign",
+          "description": "Complete redesign of a mobile banking application focusing on accessibility and ease of use.",
+          "mediaUrl": "https://via.placeholder.com/600x400",
+          "mediaType": "image",
+          "links": [
+            {
+              "label": "View on Behance",
+              "url": "https://behance.net/example"
+            }
+          ]
+        },
+        {
+          "title": "Dashboard UI Kit",
+          "description": "Comprehensive dashboard components for data visualization.",
+          "mediaUrl": "https://via.placeholder.com/600x400",
+          "mediaType": "image"
+        }
+      ]
+    }
+  ]
+}

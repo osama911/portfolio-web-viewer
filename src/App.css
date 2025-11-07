@@ -1,38 +1,321 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Loading and Error States */
+.loading-container,
+.error-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 100vh;
+  padding: 20px;
+  text-align: center;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #6200ea;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-container {
+  color: #d32f2f;
+}
+
+.error-container h2 {
+  margin-bottom: 10px;
+}
+
+/* Portfolio Viewer */
+.portfolio-viewer {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  min-height: 100vh;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Portfolio Header */
+.portfolio-header {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 0;
+}
+
+.portfolio-header .avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 5px solid white;
+  object-fit: cover;
+  position: absolute;
+  bottom: -60px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Portfolio Profile */
+.portfolio-profile {
+  padding: 80px 20px 30px 20px;
+  text-align: center;
+}
+
+.profile-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #212121;
+  margin-bottom: 8px;
+}
+
+.profile-title {
+  font-size: 20px;
+  font-weight: 400;
+  color: #6200ea;
+  margin-bottom: 16px;
+}
+
+.profile-bio {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #616161;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Contact Links */
+.contact-links {
+  padding: 30px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.contact-links h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #212121;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #212121;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.contact-link:hover {
+  background-color: #e8e8e8;
+  border-color: #6200ea;
+  transform: translateY(-2px);
+}
+
+.link-icon {
+  font-size: 20px;
+}
+
+.link-label {
+  font-size: 14px;
+}
+
+/* Categories */
+.categories {
+  padding: 40px 20px;
+}
+
+.category {
+  margin-bottom: 50px;
+}
+
+.category-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #212121;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  border-left: 4px solid #6200ea;
+}
+
+.category-description {
+  font-size: 16px;
+  color: #616161;
+  margin-bottom: 25px;
+  padding-left: 14px;
+}
+
+/* Projects Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.project-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.project-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.project-media {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  background-color: #f5f5f5;
+}
+
+.project-info {
+  padding: 20px;
+}
+
+.project-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212121;
+  margin-bottom: 10px;
+}
+
+.project-description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #616161;
+  margin-bottom: 15px;
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.project-link {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #6200ea;
   color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.project-link:hover {
+  background-color: #4a00b8;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Responsive Design */
+@media (max-width: 768px) {
+  .portfolio-header {
+    height: 200px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .portfolio-header .avatar {
+    width: 100px;
+    height: 100px;
+    bottom: -50px;
+  }
+
+  .portfolio-profile {
+    padding: 70px 15px 20px 15px;
+  }
+
+  .profile-name {
+    font-size: 26px;
+  }
+
+  .profile-title {
+    font-size: 18px;
+  }
+
+  .profile-bio {
+    font-size: 14px;
+  }
+
+  .links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-header {
+    height: 180px;
+  }
+
+  .portfolio-header .avatar {
+    width: 90px;
+    height: 90px;
+    bottom: -45px;
+  }
+
+  .portfolio-profile {
+    padding: 60px 15px 20px 15px;
+  }
+
+  .profile-name {
+    font-size: 24px;
+  }
+
+  .contact-links,
+  .categories {
+    padding: 20px 15px;
   }
 }
