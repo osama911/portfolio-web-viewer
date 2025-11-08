@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from 'react-router-dom';
 import './App.css';
 
 // Helper function to convert ARGB integer to CSS color (rgba)
@@ -64,6 +65,14 @@ function isValidDriveId(id) {
 }
 
 function App() {
+  return (
+    <Router>
+      <PortfolioApp />
+    </Router>
+  );
+}
+
+function PortfolioApp() {
   const [portfolio, setPortfolio] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -157,10 +166,54 @@ function App() {
   }
 
   return (
+    <Routes>
+      <Route path="/" element={<HomePage portfolio={portfolio} />} />
+      <Route path="/category/:categoryId" element={<CategoryPage portfolio={portfolio} />} />
+    </Routes>
+  );
+}
+
+function HomePage({ portfolio }) {
+  return (
     <div className="portfolio-viewer">
       <PortfolioHeader portfolio={portfolio} />
       <ContactInfo portfolio={portfolio} />
       <Categories categories={portfolio.categories} />
+    </div>
+  );
+}
+
+function CategoryPage({ portfolio }) {
+  const { categoryId } = useParams();
+  const navigate = useNavigate();
+
+  const category = portfolio.categories.find(cat => cat.id === categoryId);
+
+  if (!category) {
+    return (
+      <div className="error-container">
+        <h2>Category not found</h2>
+        <button onClick={() => navigate('/')}>Go back</button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="portfolio-viewer">
+      <div className="category-page-header">
+        <button onClick={() => navigate('/')} className="back-button">
+          ← Back to Portfolio
+        </button>
+        <h1 className="category-page-title">{category.title}</h1>
+        {category.description && (
+          <p className="category-page-description">{category.description}</p>
+        )}
+      </div>
+      <div className="projects-grid">
+        {category.projects && category.projects.map((project) => (
+          <Project key={project.id} project={project} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -329,6 +382,7 @@ function Categories({ categories }) {
 }
 
 function Category({ category }) {
+  const navigate = useNavigate();
   const [showIcon, setShowIcon] = useState(true);
   const [coverUrl, setCoverUrl] = useState(null);
 
@@ -351,6 +405,10 @@ function Category({ category }) {
     }
   };
 
+  const handleCategoryClick = () => {
+    navigate(`/category/${category.id}`);
+  };
+
   // Category header style with background image
   const categoryHeaderStyle = coverUrl
     ? {
@@ -366,7 +424,7 @@ function Category({ category }) {
       };
 
   return (
-    <div className="category">
+    <div className="category" onClick={handleCategoryClick}>
       {/* Category Header with Background Image */}
       <div className="category-header-banner" style={categoryHeaderStyle}>
         {/* Hidden image for preloading and error handling */}
@@ -408,12 +466,6 @@ function Category({ category }) {
             )}
           </div>
         </div>
-      </div>
-
-      <div className="projects-grid">
-        {category.projects && category.projects.map((project) => (
-          <Project key={project.id} project={project} />
-        ))}
       </div>
     </div>
   );
