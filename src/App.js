@@ -39,17 +39,18 @@ function getInitials(name) {
 }
 
 // Helper function to get image URL from Google Drive file ID
-// Primary strategy: Use uc endpoint which works best for public files
+// Use our local proxy server to bypass CORS restrictions
 function getImageUrl(driveFileId) {
   if (!driveFileId) return null;
-  // Use the direct download/view URL - this is the most reliable for public files
-  return `https://drive.google.com/uc?export=view&id=${driveFileId}`;
+  // Use local proxy server on port 3001
+  return `http://localhost:3001/drive-image/${driveFileId}`;
 }
 
 // Alternative thumbnail URL (used as fallback)
 function getThumbnailUrl(driveFileId) {
   if (!driveFileId) return null;
-  return `https://drive.google.com/thumbnail?id=${driveFileId}&sz=w2000`;
+  // Also use the proxy server
+  return `http://localhost:3001/drive-image/${driveFileId}`;
 }
 
 // Helper function to get video URL from Google Drive file ID
@@ -264,15 +265,22 @@ function PortfolioHeader({ portfolio }) {
   const backgroundColor = argbToHex(portfolio.colorValue) || '#101321';
 
   // Determine header style based on available resources
-  let headerStyle = { backgroundColor };
+  // If we have an image, use it; otherwise use the color gradient
+  let headerStyle = {};
 
   if (coverUrl && !imageError.cover) {
+    // Use cover image as background
     headerStyle = {
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${coverUrl})`,
+      backgroundImage: `url(${coverUrl})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       backgroundColor // Fallback while loading
+    };
+  } else {
+    // Use gradient: black from left to center, then color
+    headerStyle = {
+      background: `linear-gradient(90deg, #000000 0%, ${backgroundColor} 50%)`
     };
   }
 
@@ -449,16 +457,16 @@ function Category({ category }) {
   // Category header style with background image
   const categoryHeaderStyle = coverUrl
     ? {
-        backgroundImage: `url(${coverUrl})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }
+      backgroundImage: `url(${coverUrl})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+    }
     : {
-        background: categoryColor
-          ? `linear-gradient(135deg, ${categoryColor}40 0%, ${categoryColor}20 100%)`
-          : 'linear-gradient(135deg, rgba(102, 126, 234, 0.25) 0%, rgba(118, 75, 162, 0.15) 100%)',
-      };
+      background: categoryColor
+        ? `linear-gradient(135deg, ${categoryColor}40 0%, ${categoryColor}20 100%)`
+        : 'linear-gradient(135deg, rgba(102, 126, 234, 0.25) 0%, rgba(118, 75, 162, 0.15) 100%)',
+    };
 
   return (
     <div className="category" onClick={handleCategoryClick}>
