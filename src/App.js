@@ -78,30 +78,53 @@ function PortfolioApp() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Get the 'id' parameter from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const driveFileId = urlParams.get('id');
+    const loadPortfolio = async () => {
+      // Get the 'id' parameter from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const driveFileId = urlParams.get('id');
 
-    if (!driveFileId) {
-      setError('No portfolio ID provided. Please use: /view?id=DRIVE_FILE_ID');
-      setLoading(false);
-      return;
-    }
+      // Try to load from session storage first
+      const cachedPortfolio = sessionStorage.getItem('portfolioData');
 
-    // Read API key from environment variable
-    const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+      if (cachedPortfolio) {
+        try {
+          const data = JSON.parse(cachedPortfolio);
+          setPortfolio(data);
+          setLoading(false);
+          applyGlobalBackground(data);
 
-    if (!GOOGLE_API_KEY) {
-      setError('Google API key not configured. Please check your .env file.');
-      setLoading(false);
-      return;
-    }
+          // If we have an id in URL, remove it since we have cached data
+          if (driveFileId) {
+            window.history.replaceState({}, '', window.location.pathname);
+          }
+          return;
+        } catch (e) {
+          console.error('Failed to parse cached portfolio:', e);
+          sessionStorage.removeItem('portfolioData');
+        }
+      }
 
-    // Use Google Drive API v3 endpoint (better CORS support)
-    const driveUrl = `https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media&key=${GOOGLE_API_KEY}`;
+      // If no cached data and no ID, show error
+      if (!driveFileId) {
+        setError('No portfolio ID provided. Please use: ?id=DRIVE_FILE_ID');
+        setLoading(false);
+        return;
+      }
 
-    fetch(driveUrl)
-      .then(response => {
+      // Read API key from environment variable
+      const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+
+      if (!GOOGLE_API_KEY) {
+        setError('Google API key not configured. Please check your .env file.');
+        setLoading(false);
+        return;
+      }
+
+      // Fetch portfolio data from Google Drive
+      try {
+        const driveUrl = `https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media&key=${GOOGLE_API_KEY}`;
+        const response = await fetch(driveUrl);
+
         if (!response.ok) {
           if (response.status === 404) {
             throw new Error('Portfolio not found');
@@ -110,21 +133,29 @@ function PortfolioApp() {
           }
           throw new Error(`Failed to fetch portfolio data: ${response.status} ${response.statusText}`);
         }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Portfolio data loaded:', data);
+
+        const data = await response.json();
+        console.log('Portfolio data loaded from Drive:', data);
+
+        // Save to state and session storage
         setPortfolio(data);
+        sessionStorage.setItem('portfolioData', JSON.stringify(data));
         setLoading(false);
 
         // Apply global background to body element
         applyGlobalBackground(data);
-      })
-      .catch(err => {
+
+        // Remove the id parameter from URL
+        window.history.replaceState({}, '', window.location.pathname);
+
+      } catch (err) {
         console.error('Error loading portfolio:', err);
         setError(err.message);
         setLoading(false);
-      });
+      }
+    };
+
+    loadPortfolio();
   }, []);
 
   // Apply global background to body
