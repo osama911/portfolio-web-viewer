@@ -574,7 +574,7 @@ function Project({ project }) {
             <img
               key={currentMedia.index}
               src={currentMedia.url}
-              alt='profile photo'
+              alt='profile'
               className="project-media"
               loading="lazy"
               onLoad={() => {
