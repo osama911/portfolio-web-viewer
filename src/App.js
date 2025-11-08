@@ -88,11 +88,17 @@ function PortfolioApp() {
       return;
     }
 
-    const GOOGLE_API_KEY = 'AIzaSyD_5YCdZXhZQ7F6FmPWRo881xxxIXTQzpI';
+    // Read API key from environment variable
+    const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+
+    if (!GOOGLE_API_KEY) {
+      setError('Google API key not configured. Please check your .env file.');
+      setLoading(false);
+      return;
+    }
 
     // Use Google Drive API v3 endpoint (better CORS support)
     const driveUrl = `https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media&key=${GOOGLE_API_KEY}`;
-
 
     fetch(driveUrl)
       .then(response => {

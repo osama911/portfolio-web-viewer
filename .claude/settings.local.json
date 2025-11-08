@@ -5,7 +5,10 @@
       "Bash(npm start)",
       "Bash(npm install:*)",
       "Bash(netstat:*)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(.gitignore)",
+      "Bash(taskkill /PID 1180 /F)",
+      "Bash(taskkill:*)"
     ],
     "deny": [],
     "ask": []
