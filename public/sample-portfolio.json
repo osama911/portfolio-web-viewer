@@ -1,105 +1,68 @@
 {
   "name": "John Doe",
-  "title": "Full Stack Developer & Designer",
-  "bio": "Passionate about creating beautiful and functional digital experiences. I specialize in web and mobile development with a focus on user-centered design.",
-  "avatarUrl": "https://via.placeholder.com/300",
-  "headerBackgroundColor": "#6200ea",
-  "contactLinks": [
-    {
-      "label": "Email",
-      "url": "mailto:john@example.com",
-      "icon": "📧"
-    },
-    {
-      "label": "GitHub",
-      "url": "https://github.com/johndoe",
-      "icon": "💻"
-    },
-    {
-      "label": "LinkedIn",
-      "url": "https://linkedin.com/in/johndoe",
-      "icon": "💼"
-    },
-    {
-      "label": "Website",
-      "url": "https://johndoe.com",
-      "icon": "🌐"
-    }
-  ],
+  "title": "Full Stack Developer",
+  "bio": "Passionate developer with 5+ years of experience in mobile and web applications. Specialized in Flutter, React, and Node.js.",
+  "email": "john.doe@example.com",
+  "phone": "+1234567890",
+  "linkedInUrl": "https://linkedin.com/in/johndoe",
+  "extraLinks": {
+    "GitHub": "https://github.com/johndoe",
+    "Portfolio": "https://johndoe.dev",
+    "Twitter": "https://twitter.com/johndoe"
+  },
+  "avatarDriveId": null,
+  "coverDriveId": null,
+  "backgroundImageDriveId": null,
+  "colorValue": 4283215696,
+  "backgroundColorValue": 4278190080,
   "categories": [
     {
-      "name": "Web Development",
-      "description": "Full-stack web applications and responsive websites",
+      "id": "cat-001",
+      "title": "Mobile Applications",
+      "description": "Cross-platform mobile apps built with Flutter",
+      "coverDriveId": null,
+      "iconDriveId": null,
+      "colorValue": 4285887861,
       "projects": [
         {
-          "title": "E-Commerce Platform",
-          "description": "A modern online shopping platform with payment integration and inventory management.",
-          "mediaUrl": "https://via.placeholder.com/600x400",
-          "mediaType": "image",
-          "links": [
-            {
-              "label": "View Live",
-              "url": "https://example.com/project1"
-            },
-            {
-              "label": "GitHub",
-              "url": "https://github.com/johndoe/project1"
-            }
-          ]
+          "id": "proj-001",
+          "title": "E-Commerce App",
+          "description": "Full-featured shopping app with cart, payments, and order tracking.\n\nFeatures:\n• Product catalog\n• Secure checkout\n• Order history\n• Push notifications",
+          "imageDriveIds": [],
+          "videoDriveIds": [],
+          "createdAt": "2024-01-15T10:30:00.000Z",
+          "updatedAt": "2024-02-20T14:45:00.000Z",
+          "backgroundColorValue": 4294967295
         },
         {
-          "title": "Task Management App",
-          "description": "Collaborative task management tool with real-time updates.",
-          "mediaUrl": "https://via.placeholder.com/600x400",
-          "mediaType": "image",
-          "links": [
-            {
-              "label": "View Demo",
-              "url": "https://example.com/project2"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Mobile Apps",
-      "description": "Native and cross-platform mobile applications",
-      "projects": [
-        {
+          "id": "proj-002",
           "title": "Fitness Tracker",
-          "description": "Track your workouts, nutrition, and progress with detailed analytics.",
-          "mediaUrl": "https://via.placeholder.com/600x400",
-          "mediaType": "image",
-          "links": [
-            {
-              "label": "App Store",
-              "url": "https://apps.apple.com/app/example"
-            }
-          ]
+          "description": "Track workouts, calories, and progress with AI recommendations.",
+          "imageDriveIds": [],
+          "videoDriveIds": [],
+          "createdAt": "2024-03-01T09:00:00.000Z",
+          "updatedAt": "2024-03-15T16:20:00.000Z",
+          "backgroundColorValue": null
         }
       ]
     },
     {
-      "name": "UI/UX Design",
-      "description": "User interface and experience design projects",
+      "id": "cat-002",
+      "title": "Web Development",
+      "description": "Modern web applications and websites",
+      "coverDriveId": null,
+      "iconDriveId": null,
+      "colorValue": null,
       "projects": [
         {
-          "title": "Banking App Redesign",
-          "description": "Complete redesign of a mobile banking application focusing on accessibility and ease of use.",
-          "mediaUrl": "https://via.placeholder.com/600x400",
-          "mediaType": "image",
-          "links": [
-            {
-              "label": "View on Behance",
-              "url": "https://behance.net/example"
-            }
-          ]
-        },
-        {
-          "title": "Dashboard UI Kit",
-          "description": "Comprehensive dashboard components for data visualization.",
-          "mediaUrl": "https://via.placeholder.com/600x400",
-          "mediaType": "image"
+          "id": "proj-003",
+          "title": "Portfolio Website",
+          "description": "Responsive portfolio website with dark mode and animations.",
+          "imageDriveIds": [],
+          "videoDriveIds": [],
+          "createdAt": "2024-02-10T11:15:00.000Z",
+          "updatedAt": "2024-02-10T11:15:00.000Z",
+          "backgroundColorValue": 4278190080
         }
       ]
     }
