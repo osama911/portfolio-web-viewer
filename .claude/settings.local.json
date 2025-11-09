@@ -8,7 +8,9 @@
       "Bash(findstr:*)",
       "Bash(.gitignore)",
       "Bash(taskkill /PID 1180 /F)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(mkdir:*)",
+      "Bash(node proxy-server.js:*)"
     ],
     "deny": [],
     "ask": []

@@ -39,17 +39,29 @@ function getInitials(name) {
 }
 
 // Helper function to get image URL from Google Drive file ID
-// Use our local proxy server to bypass CORS restrictions
+// Uses a proxy (Netlify Function in production, local server in development) to bypass CORS
 function getImageUrl(driveFileId) {
   if (!driveFileId) return null;
-  // Use the direct download/view URL - this is the most reliable for public files
-  return `https://drive.google.com/uc?export=view&id=${driveFileId}`;
+
+  // Use Netlify Functions API endpoint (works both locally and in production)
+  // In development, this will use the local dev server
+  // In production, this will use the deployed Netlify function
+  const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+  if (isLocalDev) {
+    // For local development, use local proxy server on port 3001
+    return `http://localhost:3001/drive-image/${driveFileId}`;
+  } else {
+    // For production (Netlify), use the Netlify Function
+    return `/.netlify/functions/drive-image?id=${driveFileId}`;
+  }
 }
 
 // Alternative thumbnail URL (used as fallback)
 function getThumbnailUrl(driveFileId) {
   if (!driveFileId) return null;
-  return `https://drive.google.com/thumbnail?id=${driveFileId}&sz=w2000`;
+  // Use the same proxy approach
+  return getImageUrl(driveFileId);
 }
 
 // Helper function to get video URL from Google Drive file ID
@@ -258,19 +270,33 @@ function CategoryPage({ portfolio }) {
 function PortfolioHeader({ portfolio }) {
   const [imageError, setImageError] = useState({});
   const [showInitials, setShowInitials] = useState(!portfolio.avatarDriveId);
+  const [resolvedCoverUrl, setResolvedCoverUrl] = useState(null);
 
-  // Use cover image or fall back to color
-  const coverUrl = getImageUrl(portfolio.coverDriveId);
   const backgroundColor = argbToHex(portfolio.colorValue) || '#101321';
 
+  // Resolve the actual image URL using our proxy (works locally and on Netlify)
+  useEffect(() => {
+    if (!portfolio.coverDriveId) {
+      setResolvedCoverUrl(null);
+      return;
+    }
+
+    // Use getImageUrl which automatically handles local vs production URLs
+    const imageUrl = getImageUrl(portfolio.coverDriveId);
+    setResolvedCoverUrl(imageUrl);
+  }, [portfolio.coverDriveId]);
+
   // Determine header style based on available resources
-  // If we have an image, use it; otherwise use the color gradient
+  // Priority: coverUrl (if exists) > color gradient
   let headerStyle = {};
 
-  if (coverUrl && !imageError.cover) {
+  console.warn({ resolvedCoverUrl });
+  console.warn({ error: imageError.cover });
+
+  if (resolvedCoverUrl) {
     // Use cover image as background
     headerStyle = {
-      backgroundImage: `url(${coverUrl})`,
+      backgroundImage: `url(${resolvedCoverUrl})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
@@ -290,9 +316,9 @@ function PortfolioHeader({ portfolio }) {
   return (
     <div className="portfolio-header" style={headerStyle}>
       {/* Hidden image to preload and handle errors */}
-      {coverUrl && (
+      {resolvedCoverUrl && (
         <img
-          src={coverUrl}
+          src={resolvedCoverUrl}
           alt=""
           style={{ display: 'none' }}
           onError={() => setImageError(prev => ({ ...prev, cover: true }))}
