@@ -578,7 +578,6 @@ function Project({ project }) {
               className="project-media"
               loading="lazy"
               onLoad={() => {
-                // Successfully loaded
                 console.log('Image loaded:', currentMedia.id);
               }}
               onError={(e) => {
